@@ -15,6 +15,28 @@ This project based on Docker. So **you have to intall Docker Desktop** on your d
 For more information to install Docker, please click here.
 [Docker Official Docs](https://docs.docker.com/desktop/install/mac-install/)
 
+The two `.env` files must be placed on the same level as `docker-compose.yml`.
+```
+== db.env ==
+
+MYSQL_ROOT_PASSWORD=asdf
+MYSQL_DATABASE=main
+
+```
+```
+== backend.env ==
+
+SECRET_KEY=<django-insecure->
+
+DB_HOST=database      // unchangeable
+DB_NAME=<dbname>
+DB_USER=<db_user>
+DB_PASS=<db_password>
+DB_PORT=3306          // unchangeable
+
+```
+
+
 ## Usage
 To use ClanCoin, you can do 
 ```
