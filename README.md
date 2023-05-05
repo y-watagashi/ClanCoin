@@ -6,7 +6,7 @@ ClanCoin is a payment web application for organizations. Examples of use include
   <img src="https://user-images.githubusercontent.com/78391723/236469298-9c3a11c1-ebe9-4e48-bc79-3192bdf8298c.png" />
 </p>
 
-![](https://img.shields.io/github/v/release/ykinchan/ClanCoin?style=flat&logo=github)
+![](https://img.shields.io/github/v/release/ykinchan/ClanCoin)
 ![](https://img.shields.io/badge/licnese-MIT-brightgreen?style=flat&logo=github)
 ![](https://img.shields.io/github/repo-size/ykinchan/ClanCoin?style=flat&logo=github)
 
