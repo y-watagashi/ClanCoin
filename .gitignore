@@ -5,6 +5,9 @@ db/
 # environment valiable file
 *.env
 
+# python binary files
+*.pyc
+
 ### Node template
 # Logs
 /logs
