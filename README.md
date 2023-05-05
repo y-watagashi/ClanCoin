@@ -10,12 +10,13 @@ ClanCoin is a payment web application for organizations. Examples of use include
 ![](https://img.shields.io/badge/licnese-MIT-brightgreen?style=flat&logo=github)
 ![](https://img.shields.io/github/repo-size/ykinchan/ClanCoin?style=flat&logo=github)
 
-# Requirement
+## Requirement
 This project based on Docker. So **you have to intall Docker Desktop** on your development environment.
 For more information to install Docker, please click here.
 [Docker Official Docs](https://docs.docker.com/desktop/install/mac-install/)
 
-# Usage
+## Usage
+To use ClanCoin, you can do 
 ```
 $ git clone https://github.com/ykinchan/ClanCoin.git
 $ cd ClanCoin
@@ -25,5 +26,5 @@ or
 $ docker compose up --build -d
 ```
 > **Note**
->The first docker compose up <span style="color: red; "> may fail</span>.
+>The first docker compose up may fail.
 >In that case, compose docker down and then compose up again.
