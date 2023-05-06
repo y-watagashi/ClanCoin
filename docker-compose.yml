@@ -1,0 +1,47 @@
+version: '3'
+services:
+  # フロントエンドの設定
+  frontend:
+    tty: true
+    container_name: cc_frontend
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend/:/app/
+  
+  backend:
+    tty: true
+    container_name: cc_backend
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    volumes:
+      - ./backend/:/run/
+    ports:
+      - 8000:8000
+    depends_on:
+      database:
+        condition: service_healthy
+    env_file:
+      - backend.env
+    
+  database:
+    container_name: cc_database
+    build:
+      context: .
+      dockerfile: database/Dockerfile
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 1s
+      retries: 10
+      start_period: 3s
+      timeout: 20s
+    volumes:
+      - ./database/db:/var/lib/mysql #初期データをマウントする場所
+    ports:
+      - 3306:3306
+    env_file:
+      - db.env
