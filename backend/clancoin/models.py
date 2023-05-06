@@ -1,27 +1,23 @@
 from django.db import models
 from accounts.models import UserAccount
 
-# 親ユーザー
-class ParentUser(models.Model):
-    user = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
-    address = models.CharField(max_length=100)
 
-# 子供ユーザー
-class ChildUser(models.Model):
+class User(models.Model):
     user = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
     address = models.CharField(max_length=100)
     balance = models.IntegerField()
+    is_parent = models.BooleanField()
 
 # 組織(どの親にどの子が所属しているか保持する)
 class Organization(models.Model):
-    parent_user = models.ForeignKey(ParentUser, on_delete=models.CASCADE)
-    child_user = models.ForeignKey(ChildUser, on_delete=models.CASCADE)
+    parent_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="parent_user")
+    child_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="child_user")
 
 # 取引履歴
 # 親から子への通貨の移動を保持する
 # 子が親へ通貨を支払った際は，負の数として保持する
 class TreatHistory(models.Model):
-    parent_user = models.ForeignKey(ParentUser, on_delete=models.CASCADE)
-    child_user = models.ForeignKey(ChildUser, on_delete=models.CASCADE)
+    from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="from_user")
+    to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="to_user")
     amount = models.IntegerField()
     
