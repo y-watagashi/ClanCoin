@@ -13,16 +13,6 @@ from .models import *
 from .serializers import *
 from .permissions import *
 
-# Create your views here.
-def verify_user(req):
-    token = req.headers['Authorization']
-    url = "http://localhost:8000/api/auth/users/me/"
-    headers = {
-    'Authorization': f'{token}'
-    }
-    response = requests.request("GET", url, headers=headers)
-    return response.json()['id']
-
 def test(req):
     return JsonResponse({"hello": "hello"})
 
