@@ -176,6 +176,8 @@ SIMPLE_JWT = {
     # 認証トークン
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken', ),
     'BLACKLIST_AFTER_ROTATION': False,
+
+    "UPDATE_LAST_LOGIN": True,
 }
 
 DJOSER = {

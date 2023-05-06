@@ -17,10 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from clancoin.views import test
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/auth/', include('djoser.urls')),
     path('api/auth/', include('djoser.urls.jwt')),
     path('accounts/', include('accounts.urls')),
     path('clancoin/', include('clancoin.urls')),
+    path('test/', test),
 ]

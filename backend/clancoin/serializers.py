@@ -10,3 +10,12 @@ class UserSerializer(serializers.ModelSerializer):
             'balance',
             'is_parent'
         )
+
+
+class OrganizationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Organization
+        fields = (
+            'parent_user',
+            'child_user'
+        )
