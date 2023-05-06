@@ -57,4 +57,29 @@ class TreatHistoryViewSet(viewsets.ModelViewSet):
     def list(self, req):
         user = User.objects.filter(user=req.user).first()
         treats = TreatHistory.objects.filter(Q(to_user = user) | Q(from_user = user))
+        for obj in treats:
+            print(obj.context)
         return Response({"treats": treats.values('from_user', 'to_user', 'amount')})
+
+    # 取引の追加
+    def create(self, req):
+        # JWTの情報からユーザーを取得
+        user_id = User.objects.filter(user=req.user).first().id
+        
+        data = {
+            "from_user": int(req.POST.get('from_user', None)),
+            "to_user": int(req.POST.get('to_user', None)),
+            "amount": int(req.POST.get('amount'))
+        }
+        
+        serializer = self.serializer_class(data=data)
+
+        # JWTのユーザーからの送信以外の追加は行えない
+        if user_id != data['from_user']:
+            return Response(data = {"message": "cant add data"}, status=status.HTTP_400_BAD_REQUEST)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(data = serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(data = serializer.errors, status=status.HTTP_400_BAD_REQUEST)
