@@ -19,3 +19,9 @@ class OrganizationSerializer(serializers.ModelSerializer):
             'parent_user',
             'child_user'
         )
+
+
+class TreatHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TreatHistory
+        fields = "__all__"

@@ -1,5 +1,5 @@
 import requests
-
+from django.db.models import Q
 from django.http.response import JsonResponse
 from rest_framework import status
 from rest_framework.response import Response
@@ -34,7 +34,6 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response({'user': User.objects.filter(user=req.user).values('id', 'address')})
 
 
-
 # 組織に関する操作
 class OrganizationViewSet(viewsets.ModelViewSet):
     serializer_class = OrganizationSerializer
@@ -46,3 +45,16 @@ class OrganizationViewSet(viewsets.ModelViewSet):
         )
         print(organization)
         return Response({"organization": organization}, status=status.HTTP_200_OK)
+
+
+# 取引履歴の操作
+class TreatHistoryViewSet(viewsets.ModelViewSet):
+    queryset = TreatHistory.objects.all()
+    serializer_class = TreatHistorySerializer
+    permission_classes = [IsAuthenticated]
+
+    # JWTのユーザーに関連する取引の取得
+    def list(self, req):
+        user = User.objects.filter(user=req.user).first()
+        treats = TreatHistory.objects.filter(Q(to_user = user) | Q(from_user = user))
+        return Response({"treats": treats.values('from_user', 'to_user', 'amount')})
