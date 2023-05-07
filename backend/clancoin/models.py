@@ -1,10 +1,12 @@
+import uuid
 from django.db import models
 from accounts.models import UserAccount
 
 
 class User(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True)
     user = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
-    address = models.CharField(max_length=100)
+    address = models.CharField(max_length=64)
     balance = models.IntegerField()
     is_parent = models.BooleanField()
 
@@ -20,4 +22,3 @@ class TreatHistory(models.Model):
     from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="from_user")
     to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="to_user")
     amount = models.IntegerField()
-    

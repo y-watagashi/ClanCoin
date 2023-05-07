@@ -1,4 +1,6 @@
-import requests
+import uuid
+import hashlib
+
 from django.db.models import Q
 from django.http.response import JsonResponse
 from rest_framework import status
@@ -12,6 +14,9 @@ from rest_framework import viewsets
 from .models import *
 from .serializers import *
 from .permissions import *
+
+from accounts.models import UserAccount
+
 
 def test(req):
     return JsonResponse({"hello": "hello"})
@@ -32,7 +37,23 @@ class UserViewSet(viewsets.ModelViewSet):
     # Headerに含まれるJWTに対応するユーザーのみを表示する
     def list(self, req):
         return Response({'user': User.objects.filter(user=req.user).values('id', 'address')})
-
+    
+    def create(self, req):
+        user_id = UserAccount.objects.filter(email=req.user).first().id
+        id = uuid.uuid4()
+        data = {
+            'id': id,
+            'address': hashlib.sha256(str(id).encode()).hexdigest(), # idのハッシュ値をアドレスとして使用する
+            'balance': 0,
+            'is_parent': req.POST.get('is_parent'),
+            'user': user_id
+        }
+        serializer = self.serializer_class(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(data=serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 # 組織に関する操作
 class OrganizationViewSet(viewsets.ModelViewSet):
