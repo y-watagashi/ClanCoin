@@ -1,7 +1,16 @@
 from django.urls import path
-from . import views
+from .views import *
+from rest_framework import routers
 
-urlpatterns = [
-    path('auth-test/', views.LoginRequired.as_view()),
-    path('test/', views.test),
+
+router = routers.DefaultRouter()
+router.register('users', UserViewSet)
+router.register('organization', OrganizationViewSet)
+router.register('treat-history', TreatHistoryViewSet)
+
+
+urlpatterns = router.urls
+
+urlpatterns += [
+    path('test/', test),
 ]
