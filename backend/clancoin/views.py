@@ -104,3 +104,16 @@ class TreatHistoryViewSet(viewsets.ModelViewSet):
             return Response(data = serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(data = serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class OrganizationViewSet(viewsets.ModelViewSet):
+    queryset = Organization.objects.all()
+    serializer_class = OrganizationSerializer
+    permission_classes = [IsAuthenticated]
+
+    def list(self, req):
+        user = User.objects.filter(user=req.user).first()
+        if not user.is_parent:
+            return Response({"permission denied"}, status=status.HTTP_401_UNAUTHORIZED)
+        organization = Organization.objects.filter(parent_user=user)
+        return Response({"organization": organization.values('child_user')})
