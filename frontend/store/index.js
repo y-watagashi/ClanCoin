@@ -1,7 +1,7 @@
 export const state = () => ({
   is_login: false,
   refresh_token: null,
-  access_token: null,
+  access_token: '',
 })
 
 export const getters = {
@@ -19,6 +19,9 @@ export const getters = {
 export const mutations = {
     updateLoginState(state, value){
         state.is_login = value
+    },
+    updateAccessToken(state, value){
+      state.access_token = value
     }
 }
 
