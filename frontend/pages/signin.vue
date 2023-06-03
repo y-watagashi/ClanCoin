@@ -71,6 +71,7 @@ import { ref } from '@nuxtjs/composition-api'
 import themeConfig from '../themeConfig'
 
 export default {
+  middleware: 'authenticator',
   name: 'signin',
   layout: 'signin',
   setup() {
