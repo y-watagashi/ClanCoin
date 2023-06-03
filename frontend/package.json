@@ -12,6 +12,7 @@
     "lintfix": "prettier --write --list-different ."
   },
   "dependencies": {
+    "@nuxtjs/auth-next": "5.0.0-1667386184.dfbbb54",
     "@nuxtjs/axios": "^5.13.6",
     "core-js": "^3.25.3",
     "nuxt": "^2.15.8",
@@ -21,6 +22,8 @@
     "vuetify": "^2.6.10"
   },
   "devDependencies": {
+    "@mdi/js": "^7.2.96",
+    "@nuxtjs/composition-api": "^0.33.1",
     "@nuxtjs/vuetify": "^1.12.3",
     "eslint-config-prettier": "^8.5.0",
     "prettier": "^2.7.1"
