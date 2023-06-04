@@ -2,7 +2,7 @@
   <div>
     <v-row>
       <v-col>
-        <QRCode class="mt-10" />
+        <Menu class="mt-10" />
       </v-col>
     </v-row>
     <v-row>
@@ -10,7 +10,7 @@
         <v-card color="primary" class="rounded-b-xl" height="100" width="91%">
           <v-row>
             <v-col cols="6" align="center">
-              <v-btn x-large icon color="white"><v-icon>mdi-qrcode-scan</v-icon></v-btn>
+              <v-btn x-large icon color="white" @click="goScan"><v-icon>mdi-qrcode-scan</v-icon></v-btn>
               <p class="white--text font-weight-bold">スキャン</p>
             </v-col>
             <v-col cols="6" align="center">
@@ -24,13 +24,13 @@
   </div>
 </template>
 <script>
-import QRCode from '@/components/QRCode'
+import Menu from '@/components/Menu'
 import axios from 'axios'
 export default {
   name: 'home',
   layout: 'loggedin',
   components: {
-    QRCode,
+    Menu,
   },
   data() {
     return {
@@ -43,6 +43,9 @@ export default {
     this.fetchuser()
   },
   methods: {
+    goScan(){
+      this.$router.push('/scan')
+    },
     async logout() {
       await this.$auth.logout()
     },

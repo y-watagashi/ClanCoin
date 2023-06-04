@@ -1,46 +1,48 @@
 <template>
-  <v-row>
-    <v-col align="center">
-      <v-card rounded elevation="10" width="90%">
-        <v-row>
-          <v-col align="center" cols="6" class="mt-8">
-            <p style="font-size: 15pt" class="font-weight-bold">利用可能額</p>
-            <span style="font-size: 25pt">{{ balance }} </span>
-            <span style="font-size: 15pt; color: #424242">PPC</span>
-          </v-col>
-          <v-col cols="5">
-            <qrcode value="test message" :options="{ width: 160 }" />
-          </v-col>
-        </v-row>
-      </v-card>
-    </v-col>
-  </v-row>
-</template>
-<script>
-import axios from 'axios'
-export default {
-  data() {
-    return {
-      balance: 100,
-    }
-  },
-  mounted() {
-    this.getBalance()
-  },
-  methods: {
-    getBalance() {
-      const access_token = this.$auth.strategy.token.get()
-      const url = 'http://localhost:8000/clancoin/users/'
-      axios
-        .get(url, {
-          headers: {
-            Authorization: access_token,
-          },
-        })
-        .then((res) => {
-          this.balance = res.data.user[0].balance
-        })
+    <div>
+      <p class="error">{{ error }}</p>
+  
+      <p class="decode-result">
+        Last result: <b>{{ result }}</b>
+      </p>
+  
+      <qrcode-stream @decode="onDecode" @init="onInit" />
+    </div>
+  </template>
+  
+  <script>
+  export default {
+    layout: 'client/simple',
+    data() {
+      return {
+        result: '',
+        error: ''
+      }
     },
-  },
-}
-</script>
+    methods: {
+      onDecode(result) {
+        this.result = result
+      },
+  
+      async onInit(promise) {
+        try {
+          await promise
+        } catch (error) {
+          if (error.name === 'NotAllowedError') {
+            this.error = 'ERROR: you need to grant camera access permisson'
+          } else if (error.name === 'NotFoundError') {
+            this.error = 'ERROR: no camera on this device'
+          } else if (error.name === 'NotSupportedError') {
+            this.error = 'ERROR: secure context required (HTTPS, localhost)'
+          } else if (error.name === 'NotReadableError') {
+            this.error = 'ERROR: is the camera already in use?'
+          } else if (error.name === 'OverconstrainedError') {
+            this.error = 'ERROR: installed cameras are not suitable'
+          } else if (error.name === 'StreamApiNotSupportedError') {
+            this.error = 'ERROR: Stream API is not supported in this browser'
+          }
+        }
+      }
+    }
+  }
+  </script>  
