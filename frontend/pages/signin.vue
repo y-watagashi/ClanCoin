@@ -116,8 +116,11 @@ export default {
         })
         console.log('hello')
       } catch (e) {
-        console.log(e)
-        alert('エラーが発生しています')
+        this.$swal.fire({
+          icon: 'error',
+          title: 'ログインエラー',
+          text: 'EmailもしくはPasswordが間違っています',
+        })
       }
     },
   },
