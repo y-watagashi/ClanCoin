@@ -5,12 +5,17 @@
     <p></p>
     <v-btn @click="logout">logout</v-btn>
     <v-btn @click="fetchuser">fetch user</v-btn>
+    <QRCode/>
   </div>
 </template>
 <script>
+import QRCode from '@/components/QRCode'
 import axios from 'axios'
 export default {
   name: 'home',
+  components: {
+    QRCode,
+  },
   data() {
     return {
       is_login: null,
