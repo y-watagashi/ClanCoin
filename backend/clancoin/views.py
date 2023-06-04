@@ -36,7 +36,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
     # Headerに含まれるJWTに対応するユーザーのみを表示する
     def list(self, req):
-        return Response({'user': User.objects.filter(user=req.user).values('id', 'address')})
+        return Response({'user': User.objects.filter(user=req.user).values('id', 'address', 'balance')})
     
     def create(self, req):
         user_id = UserAccount.objects.filter(email=req.user).first().id
