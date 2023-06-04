@@ -6,18 +6,16 @@
     <v-btn @click="logout">logout</v-btn>
     <v-btn @click="fetchuser">fetch user</v-btn>
     <QRCode/>
-    <BottomNavi/>
   </div>
 </template>
 <script>
 import QRCode from '@/components/QRCode'
-import BottomNavi from '@/components/BottomNavi'
 import axios from 'axios'
 export default {
   name: 'home',
+  layout: 'loggedin',
   components: {
     QRCode,
-    BottomNavi,
   },
   data() {
     return {

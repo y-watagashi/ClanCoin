@@ -1,26 +1,29 @@
 <template>
-    <v-bottom-navigation absolute rounded v-model="value">
+  <div>
+    <v-bottom-navigation absolute rounded v-model="value" shift class="rounded-pill">
       <v-btn value="recent">
-        <span>Recent</span>
-  
+        <span>履歴</span>
+
         <v-icon>mdi-history</v-icon>
       </v-btn>
-  
-      <v-btn value="favorites">
-        <span>Favorites</span>
-  
-        <v-icon>mdi-heart</v-icon>
+
+      <v-btn x-large fab value="favorites">
+        <span>ホーム</span>
+
+        <v-icon>mdi-home</v-icon>
       </v-btn>
-  
+
+
       <v-btn value="nearby">
-        <span>Nearby</span>
-  
-        <v-icon>mdi-map-marker</v-icon>
+        <span>アカウント</span>
+
+        <v-icon>mdi-account</v-icon>
       </v-btn>
     </v-bottom-navigation>
-  </template>
-  <script>
-  export default {
-    data: () => ({ value: 'recent' }),
-  }
+  </div>
+</template>
+<script>
+export default {
+  data: () => ({ value: 'recent' }),
+}
 </script>
