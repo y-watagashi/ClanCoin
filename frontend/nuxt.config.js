@@ -60,7 +60,10 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['@/plugins/vueQrcode'],
+  plugins: [
+    '@/plugins/vueQrcode',
+    { src: '~/plugins/vue-qrcode-reader', ssr: false }
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
